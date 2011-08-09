@@ -194,8 +194,8 @@ class TestModelsTestCase(TestCase):
         self.failUnlessEqual(new_count + 1, old_count)
 
     def test_gravatar_hash(self):
-        hash = get_hash('Sven@gmail.com') 
-        self.failUnlessEqual(hash,'5ab47e93b8f365b3c2b63f1b692ec67e')
+        hash = get_hash(' MyEmailAddress@example.com ') 
+        self.failUnlessEqual(hash,'0bc83cb571cd1c50ba6f3e8a78ef1346')
 
     def test_vcard_algo(self):
         output = _vcard_string(self.contact1)

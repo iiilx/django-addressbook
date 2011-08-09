@@ -100,6 +100,7 @@ def index(request):
     return direct_to_template(request, 'addressbook/index.html', {'tup':tup, 'contacts':contacts})
 
 def get_hash(str):
+    str = str.lower().strip()
     md5 = hashlib.md5()
     md5.update(str)
     return md5.hexdigest()
