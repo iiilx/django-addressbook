@@ -18,7 +18,7 @@ http://microformats.org/wiki/hcard
 * The app is installable using standard Python distutils
 
 Installing the app:
-1) clone via git
+1) clone via git and python setup.py install
    or
 2) easy_install django-addressbook
 
