@@ -1,0 +1,34 @@
+<div id="hcard-{{ contact.first_name }}{% if contact.middle_name %}-{{ contact.middle_name }}{% endif %}-{{ contact.last_name }}" class="vcard">
+<img src="http://www.gravatar.com/avatar/{{hash}}?s=50" alt="photo of {{contact.first_name}}" class="photo"/>
+    {% if contact.url %}
+    <a class="fn n url" href="{{contact.url}}">
+    {% else %}
+    <span class="fn n">
+    {% endif %}
+        <span class="given-name">{{ contact.first_name }}</span>
+        <span class="additional-name">{{ contact.middle_name }}</span>
+        <span class="family-name">{{ contact.last_name }}</span>
+    {% if contact.url %}
+    </a>
+    {% else %}
+    </span>
+    {% endif %}
+{% if contact.organization %}<div class="org">{{ contact.organization }}</div>{% endif %}
+    {% for email in emails %}
+    <a class="email" href="mailto:{{ email.email }}">{{ email.email }}</a><br />
+    {% endfor %}
+    {% for address in addresses %}
+    <div class="adr">Address ({{address.type|lower}}): 
+        <div class="street-address">{{address.street}}</div>
+        <span class="locality">{{ address.city }}</span>,
+        <span class="region">{{ address.state }}</span>,
+        <span class="postal-code">{{ address.zip }}</span>
+        <span class="country-name">United States</span>
+    </div>
+    
+    {% endfor %}
+    {% for phone in phones %}
+    <div class="tel">Tel <span class="type">({{ phone.type|lower }})</span>: <span class="value">{{ phone.phone }}</span></div>
+    {% endfor %}
+</div>
+

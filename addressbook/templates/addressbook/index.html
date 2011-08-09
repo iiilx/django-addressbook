@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/addressbook.css" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+{% include "addressbook/links.html" %}
+
+{% if messages %}
+<div class="wrapper">
+{% for message in messages %}
+<p class="msg">{{message}}</p>
+{% endfor %}
+</div>
+{% endif %}
+<div class="content">
+
+{% if contacts %}
+
+{% for cat, contacts in tup %}
+    <div class="dark"><b>{{cat}}</b></div>
+    <div class="body">
+    {% if contacts %}
+        {% for contact in contacts %}
+        <p><a href="{% url addressbook_single_contact contact.id %}">{{ contact.first_name }} {{ contact.last_name }}</a></p>
+        {% endfor %}
+    {% else %}
+        <p>None</p>
+    {% endif %}
+    </div>
+{% endfor %}
+{% else %}
+No contacts
+{% endif %}
+</div>
+{% endblock %}

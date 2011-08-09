@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load uni_form_tags %}
+{% block extrahead %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}uni_form/uni-form.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}uni_form/default.uni-form.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/addressbook.css" type="text/css" />
+<!-- note that there's also blue.uni-form.css and dark.uni-form.css available if you want to try changing defaults up -->
+<script src="{{ MEDIA_URL }}uni_form/uni-form.jquery.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+{% include "addressbook/links.html" %}
+
+<form action="{% url addressbook_add_group %}" method="post" class="uniForm"> {% csrf_token %}
+<fieldset class="inlineLabels">
+<div class="dark">Add a contact group</div>
+{{ form|as_uni_form }}
+<div class="buttonHolder">
+<button class=primaryAction" type="submit">Add Group</button>
+</div>
+</fieldset>
+</form>
+{% endblock %}

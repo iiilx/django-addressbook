@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load qrcode %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/addressbook.css" type="text/css" />
+{% endblock %}
+
+{% block content %}
+{% include "addressbook/links.html" %}
+
+{% include "addressbook/hcard.html" %}
+{{ vcard_str|qrcode }}
+
+<a class="dlink" href="{% url addressbook_download_vcard contact.id %}">Download V-card</a> 
+
+<div style="margin-top:10px;">
+<button class="inline" onclick="window.location = '{% url addressbook_edit_contact contact.id %}';">Edit Contact</button>
+<form action="" method="post" class="inline"> {% csrf_token %}
+<input type="submit" value="Delete Contact">
+</form>
+</div>
+{% endblock %}

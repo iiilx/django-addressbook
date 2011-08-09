@@ -1,0 +1,9 @@
+<p>
+{% if user.is_authenticated %}
+        <a href="{% url addressbook_index %}">My Address Book</a> <a href="{% url addressbook_add_group %}">Add Group</a>
+        <a href="{% url addressbook_add_contact %}">Add Contact</a>
+{% else %}
+You are not logged in
+{% endif %}
+</p>
+

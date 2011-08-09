@@ -1,0 +1,2 @@
+include *.txt
+recursive-include addressbook *.py *.html *.css
