@@ -195,9 +195,14 @@ class TestModelsTestCase(TestCase):
         self.failUnlessEqual(hash,'0bc83cb571cd1c50ba6f3e8a78ef1346')
 
     def test_vcard_algo(self):
-        output = _vcard_string(self.contact1)
+        output = _vcard_string(self.contact1).splitlines()
         expected = 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:Smith;Sven;;;\r\nFN:Sven Smith\r\nORG:FDA\r\nTEL;TYPE=WORK:212-123-1234\r\nTEL;TYPE=HOME:410-123-3455\r\nADR;TYPE=HOME:;;543 Cameron Run Terrace;Arlington;VA;22313;United States\r\nADR;TYPE=WORK:;;2000 Hunt Ave;Arlington;VA;22313;United States\r\nEMAIL;TYPE=WORK:Sven@gmail.com\r\nEMAIL;TYPE=HOME:blah@gmail.com\r\nURL:http://fda.gov\r\nEND:VCARD\r\n' 
-        self.failUnlessEqual(output, expected)    
+        expected = expected.splitlines()
+        good = True
+        for i in range(0, len(output)):
+            if output[i] not in expected:
+                good = False
+        self.failUnlessEqual(good, False)    
     
     def tearDown(self):
         self.user.delete()
