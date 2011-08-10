@@ -118,6 +118,7 @@
 
 {% include "addressbook/links.html" %}
 
+<div class="wrapper">
 <h1>Editing {{contact.first_name}} {{contact.last_name}}'s Contact Info</h1>
 <form action="" method="post" class="uniForm">{% csrf_token %}
     <fieldset class="inlineLabels">
@@ -150,6 +151,6 @@
         </div>
     </fieldset> 
  
-</form>
+</form></div>
 {% endblock %}
 

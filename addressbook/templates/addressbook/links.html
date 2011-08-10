@@ -1,3 +1,4 @@
+<div class="wrapper">
 <p>
 {% if user.is_authenticated %}
         <a href="{% url addressbook_index %}">My Address Book</a> <a href="{% url addressbook_add_group %}">Add Group</a>
@@ -6,4 +7,4 @@
 You are not logged in
 {% endif %}
 </p>
-
+</div>

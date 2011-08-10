@@ -23,10 +23,11 @@ label {text-align:right;}
 padding:4px 8px;
 }
 .country-name{margin-left:54px;display:block;}
-.locality{clear:both;margin-left:54px;width:160px;text-align:left;}
-.region{clear:right;}
+.locality{clear:both;margin-left:54px;text-align:left;}
+.region{}
 .street-address{text-align:left;display:inline}
 .email{display:inline;clear:both;}
+.qr{margin-right:300px;float:right;}
 .qrcode{}
 .body{margin-bottom:16px;padding:10px;border:1px solid #dcdcdc;}
 .sm{font-size:12px;}
@@ -38,11 +39,11 @@ padding:4px 8px;
 #login{margin-bottom:10px;}
 #openid_form{margin-top:0px!important;position:relative;bottom:10px;}
 .asteriskField{color:red}
-.vcard {font-size:14px; background:#CCC;padding:6px;width:200px; border:1px solid #666}
+.vcard {float:left;margin-top:10px;font-size:14px; background:#CCC;padding:6px;max-width:250px;min-width:200px; border:1px solid #666}
 .adr, .tel{margin:6px 0px;display:block;clear:both}
 .msg{color:#006600}
 .photo {float:left; margin-right:4px;border:1px solid #666;margin-bottom:4px;}
 .left{margin-left:10px;}
 .left_spc{margin-left:4px;}
 .left_wide{margin-left:150px;;}
-.dlink{display:block;font-size:13px;margin-top:6px;}
+.dlink{text-align:center;display:block;font-size:13px;margin-top:6px;}

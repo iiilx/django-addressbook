@@ -112,6 +112,7 @@ function updateElementIndex(el, prefix, ndx) {
 {% block content %}
 {% include "addressbook/links.html" %}
 
+<div class="wrapper">
 <form action="" method="post" class="uniForm">{% csrf_token %}
     <fieldset class="inlineLabels">
         <div class="dark">Add Contact Info</div>
@@ -150,4 +151,5 @@ function updateElementIndex(el, prefix, ndx) {
     </fieldset> 
  
 </form>
+</div>
 {% endblock %}

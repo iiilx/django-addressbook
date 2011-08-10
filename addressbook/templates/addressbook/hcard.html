@@ -14,21 +14,23 @@
     </span>
     {% endif %}
 {% if contact.organization %}<div class="org">{{ contact.organization }}</div>{% endif %}
+    <br clear="all" />
     {% for email in emails %}
-    <a class="email" href="mailto:{{ email.email }}">{{ email.email }}</a><br />
+    <span class="type">{{email.type|lower}}</span>: <a class="email" href="mailto:{{ email.email }}">{{ email.email }}</a><br />
     {% endfor %}
     {% for address in addresses %}
-    <div class="adr">Address ({{address.type|lower}}): 
+    <div class="adr"><span class="type">{{address.type|lower}}</span>: 
         <div class="street-address">{{address.street}}</div>
+        <br />        
         <span class="locality">{{ address.city }}</span>,
-        <span class="region">{{ address.state }}</span>,
+        <span class="region">{{ address.state }}</span>
         <span class="postal-code">{{ address.zip }}</span>
         <span class="country-name">United States</span>
     </div>
     
     {% endfor %}
     {% for phone in phones %}
-    <div class="tel">Tel <span class="type">({{ phone.type|lower }})</span>: <span class="value">{{ phone.phone }}</span></div>
+    <div class="tel"><span class="type">{{ phone.type|lower }}</span>: <span class="value">{{ phone.phone }}</span></div>
     {% endfor %}
 </div>
 

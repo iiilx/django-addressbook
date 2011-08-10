@@ -22,14 +22,13 @@ class TestModelsTestCase(TestCase):
         self.address1 = Address.objects.create(street = '2000 Hunt Ave', 
                                                city = 'Arlington', state = 'VA', 
                                                zip = '22313', type = 'WORK', contact = self.contact1)
-        self.email1 = Email.objects.create(email = 'Sven@gmail.com', contact = self.contact1)
-        self.phone1 = PhoneNumber.objects.create(contact = self.contact1, phone = '212-123-1234')
+        self.email1 = Email.objects.create(email = 'Sven@gmail.com', type="WORK", contact = self.contact1)
+        self.phone1 = PhoneNumber.objects.create(contact = self.contact1, type="WORK", phone = '212-123-1234')
         self.address2 = Address.objects.create(street = '543 Cameron Run Terrace', 
-                                               city = 'Arlington', 
-                                               state = 'VA', zip = '22313',
-                                               contact = self.contact1)
-        self.email2 = Email.objects.create(email = 'blah@gmail.com', contact = self.contact1)
-        self.phone2 = PhoneNumber.objects.create(contact = self.contact1, phone = '410-123-3455')
+                                               city = 'Arlington', state = 'VA', zip = '22313',
+                                               contact = self.contact1, type="HOME")
+        self.email2 = Email.objects.create(email = 'blah@gmail.com', type="HOME", contact = self.contact1)
+        self.phone2 = PhoneNumber.objects.create(contact = self.contact1, phone = '410-123-3455', type="HOME")
 
         """
         Create a 2nd Contact for the 'Family' contact group with Email, Phone, Address
@@ -37,12 +36,11 @@ class TestModelsTestCase(TestCase):
         self.contact2 = Contact.objects.create(first_name = 'Bogus', last_name='Lee',
                                                group = self.group1, middle_name='Nacho',
                                                organization='Doritos Inc.', url='http://doritos.com')
-        self.c2_address = Address.objects.create(street = '11 Park Pl',
-                                               city = 'Django', state = 'NJ',
-                                               zip = '07463-2308', contact = self.contact2)
+        self.c2_address = Address.objects.create(street = '11 Park Pl', city = 'Django', state = 'NJ',
+                                               zip = '07463-2308', type="HOME", contact = self.contact2)
 
-        self.c2_email = Email.objects.create(email = 'Mark@gmail.com', contact = self.contact2)
-        self.c2_phone = PhoneNumber.objects.create(contact = self.contact2, phone = '201-123-1234')
+        self.c2_email = Email.objects.create(email = 'Mark@gmail.com', type="HOME", contact = self.contact2)
+        self.c2_phone = PhoneNumber.objects.create(contact=self.contact2, phone='201-123-1234', type="HOME")
 
         """
         Create a 2nd Group: Friends. Create a 3rd contact in this group with Email, Address
@@ -53,11 +51,10 @@ class TestModelsTestCase(TestCase):
                                                group = self.group2,
                                                organization = 'Ducks & Friends',
                                                url='http://ducks.com')
-        self.c3_email1 = Email.objects.create(email = 'Donald@gmail.com', contact = self.contact3)
-        self.c3_phone1 = PhoneNumber.objects.create(contact = self.contact3, phone = '321-123-3455')
-        self.c3_address1 = Address.objects.create(street = '123 Dagger Ave',
-                                               city = 'Danger', state = 'NY',
-                                               zip = '07222-2308', contact = self.contact3)
+        self.c3_email1 = Email.objects.create(email = 'Donald@gmail.com', type="HOME", contact = self.contact3)
+        self.c3_phone1 = PhoneNumber.objects.create(contact = self.contact3, phone = '321-123-3455', type="HOME")
+        self.c3_address1 = Address.objects.create(street = '123 Dagger Ave', city = 'Danger', state = 'NY',
+                                               zip = '07222-2308', type="HOME", contact = self.contact3)
 
         self.login_req_uris=['/addressbook/','/addressbook/group/add','/addressbook/contact/add',
               '/addressbook/contact/%s/edit', '/addressbook/contact/%s/view', 
@@ -160,7 +157,7 @@ class TestModelsTestCase(TestCase):
         response = self.logged_client.post('/addressbook/contact/add', {'group': self.group1.pk, 'last_name':'Manno', 
                                     'first_name':'David', 'email-TOTAL_FORMS':'1', 'email-INITIAL_FORMS':'0', 
                                     'email-MAX_NUM_FORMS':'0', 'email-0-email':'Sven@gmail.com', 
-                                    'email-0-type':'PREF', 'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
+                                    'email-0-type':'WORK', 'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
                                     'phone-MAX_NUM_FORMS':'3', 'phone-0-phone':'201-123-1234', 
                                     'phone-0-type':'WORK', 'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
                                     'address-MAX_NUM_FORMS':'3', 'address-0-street':'11 Steven Pl', 
@@ -176,7 +173,7 @@ class TestModelsTestCase(TestCase):
         response = self.logged_client.post('/addressbook/contact/%s/edit' % self.contact1.pk, {'group': self.group1.pk, 'last_name':'Smith', 
                                     'first_name':'Sven', 'middle_name':'Steven','email-TOTAL_FORMS':'1', 'email-INITIAL_FORMS':'0', 
                                     'email-MAX_NUM_FORMS':'0', 'email-0-email':'manno@gmail.com', 
-                                    'email-0-type':'INTERNET', 'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
+                                    'email-0-type':'WORK', 'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
                                     'phone-MAX_NUM_FORMS':'3', 'phone-0-phone':'201-123-1234', 
                                     'phone-0-type':'WORK', 'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
                                     'address-MAX_NUM_FORMS':'3', 'address-0-street':'15 Howard Pl', 
@@ -199,7 +196,7 @@ class TestModelsTestCase(TestCase):
 
     def test_vcard_algo(self):
         output = _vcard_string(self.contact1)
-        expected = 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:Smith;Sven;;;\r\nFN:Sven Smith\r\nORG:FDA\r\nTEL;TYPE=:212-123-1234\r\nTEL;TYPE=:410-123-3455\r\nADR;TYPE=:;;543 Cameron Run Terrace;Arlington;VA;22313;United States\r\nADR;TYPE=WORK:;;2000 Hunt Ave;Arlington;VA;22313;United States\r\nEMAIL;TYPE=:Sven@gmail.com\r\nEMAIL;TYPE=:blah@gmail.com\r\nURL:http://fda.gov\r\nEND:VCARD\r\n' 
+        expected = 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:Smith;Sven;;;\r\nFN:Sven Smith\r\nORG:FDA\r\nTEL;TYPE=WORK:212-123-1234\r\nTEL;TYPE=HOME:410-123-3455\r\nADR;TYPE=HOME:;;543 Cameron Run Terrace;Arlington;VA;22313;United States\r\nADR;TYPE=WORK:;;2000 Hunt Ave;Arlington;VA;22313;United States\r\nEMAIL;TYPE=WORK:Sven@gmail.com\r\nEMAIL;TYPE=HOME:blah@gmail.com\r\nURL:http://fda.gov\r\nEND:VCARD\r\n' 
         self.failUnlessEqual(output, expected)    
     
     def tearDown(self):
