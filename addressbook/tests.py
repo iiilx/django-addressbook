@@ -202,7 +202,7 @@ class TestModelsTestCase(TestCase):
         for i in range(0, len(output)):
             if output[i] not in expected:
                 good = False
-        self.failUnlessEqual(good, False)    
+        self.failUnlessEqual(good, True)    
     
     def tearDown(self):
         self.user.delete()
