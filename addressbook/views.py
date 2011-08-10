@@ -152,6 +152,10 @@ def _vcard_string(contact):
         v.add('org')
         v.org.value = [org]
     addresses = Address.objects.filter(contact=contact)
+    title = contact.title
+    if title:
+        v.add('title')
+        v.title.value = title
     for address in addresses:
         a = v.add('adr')
         a.value = vobject.vcard.Address(street=address.street, city=address.city, region= address.state, code = address.zip, country = "United States" )

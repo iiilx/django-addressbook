@@ -43,6 +43,7 @@ class Contact(models.Model):
     last_name = models.CharField(max_length = "40", blank=False)
     first_name = models.CharField(max_length = "40", blank=False)
     middle_name = models.CharField(max_length = "40", blank = True)
+    title = models.CharField(max_length = "40", blank = True)
     organization = models.CharField(max_length = "50", blank = True)
     url = models.URLField(verify_exists = False, blank = True)    
     

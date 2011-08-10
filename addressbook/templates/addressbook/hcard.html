@@ -14,6 +14,7 @@
     </span>
     {% endif %}
 {% if contact.organization %}<div class="org">{{ contact.organization }}</div>{% endif %}
+{% if contact.title %}<span class="title">{{ contact.title}}</span>{% endif %}
     <br clear="all" />
     {% for email in emails %}
     <span class="type">{{email.type|lower}}</span>: <a class="email" href="mailto:{{ email.email }}">{{ email.email }}</a><br />
