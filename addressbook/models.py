@@ -3,27 +3,29 @@ from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 from django.contrib.auth.models import User
 
 ADR_TYPES = (
-    ('INTL', 'INTL'),
-    ('POSTAL', 'POSTAL'),
-    ('PARCEL', 'PARCEL'),
+#    ('INTL', 'INTL'),
+#    ('POSTAL', 'POSTAL'),
+#    ('PARCEL', 'PARCEL'),
     ('WORK', 'WORK'),
-    ('DOM', 'DOM'),
+#    ('DOM', 'DOM'),
     ('HOME', 'HOME'),
-    ('PREF', 'PREF'),
+#    ('PREF', 'PREF'),
 )
 
 TEL_TYPES = (
     ('HOME', 'HOME'),
-    ('MSG', 'MSG'),
+#    ('MSG', 'MSG'),
     ('WORK', 'WORK'),
-    ('PREF', 'PREF'),
+#    ('PREF', 'PREF'),
     ('FAX', 'FAX'),
     ('CELL', 'CELL'),
 )
 
 EMAIL_TYPES = (
-    ('INTERNET', 'INTERNET'),
-    ('PREF', 'PREF'),
+    ('HOME', 'HOME'),
+    ('WORK', 'WORK'),
+#    ('INTERNET', 'INTERNET'),
+#    ('PREF', 'PREF'),
 )
 
 class ContactGroup(models.Model):

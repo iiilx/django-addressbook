@@ -22,20 +22,25 @@ label {text-align:right;}
     text-shadow:1px 1px 0px #d9d9d9;
 padding:4px 8px;
 }
-.country-name{display:block}
+.country-name{margin-left:54px;display:block;}
+.locality{clear:both;margin-left:54px;width:160px;text-align:left;}
+.region{clear:right;}
+.street-address{text-align:left;display:inline}
+.email{display:inline;clear:both;}
 .qrcode{}
 .body{margin-bottom:16px;padding:10px;border:1px solid #dcdcdc;}
 .sm{font-size:12px;}
+.type{clear:both;float:left;width:45px;text-align:right;color:#000;font-weight:bold;}
 .buttonHolder{margin-left:30px !important;margin-top:0px !important;padding-top:10px !important;text-align:left !important}
 .inline{display:inline;}
 .add{float:right;color:#333;margin-top:2px;}
 .form_block{border-top:1px solid #BBB;padding-top:10px;}
 #login{margin-bottom:10px;}
+#openid_form{margin-top:0px!important;position:relative;bottom:10px;}
 .asteriskField{color:red}
 .vcard {font-size:14px; background:#CCC;padding:6px;width:200px; border:1px solid #666}
-.adr{display:block;clear:both}
+.adr, .tel{margin:6px 0px;display:block;clear:both}
 .msg{color:#006600}
-img {border:0px;}
 .photo {float:left; margin-right:4px;border:1px solid #666;margin-bottom:4px;}
 .left{margin-left:10px;}
 .left_spc{margin-left:4px;}
