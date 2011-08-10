@@ -24,6 +24,7 @@ padding:4px 8px;
 }
 .country-name{margin-left:54px;display:block;}
 .locality{clear:both;margin-left:54px;text-align:left;}
+.title{display:block}
 .region{}
 .street-address{text-align:left;display:inline}
 .email{display:inline;clear:both;}
