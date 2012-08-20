@@ -1,15 +1,11 @@
-from urllib import urlencode
 import hashlib
 import vobject
 
 from django.views.generic.simple import direct_to_template
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, logout 
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 
-import settings
 from addressbook.models import *
 from addressbook.forms import *
 
@@ -22,7 +18,7 @@ def add_group(request):
         form = ContactGroupForm(request.POST, instance=group)
         if form.is_valid():
             form.save()
-            request.user.message_set.create(message = 'Successfully saved group.')
+#            request.user.message_set.create(message = 'Successfully saved group.')
             return HttpResponseRedirect(reverse('addressbook_index'))
     return direct_to_template(request, 'addressbook/add_group.html', {'form':form})
 
@@ -49,7 +45,7 @@ def add_contact(request):
                 address = form.save(commit=False)
                 address.contact = contact
                 address.save()
-            request.user.message_set.create(message = 'Successfully saved contact.')    
+#            request.user.message_set.create(message = 'Successfully saved contact.')
             return HttpResponseRedirect(reverse('addressbook_index')) # Redirect to a 'success' page
     else:
         groups = ContactGroup.objects.filter(user=request.user)
