@@ -16,9 +16,17 @@ class EmailAdmin(admin.ModelAdmin):
 class PhoneNumberAdmin(admin.ModelAdmin):
     pass
 
+class WebsiteAdmin(admin.ModelAdmin):
+    pass
+
+class SocialNetworksAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(ContactGroup, ContactGroupAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Email, EmailAdmin)
 admin.site.register(PhoneNumber, PhoneNumberAdmin)
+admin.site.register(Website, WebsiteAdmin)
+admin.site.register(SocialNetworks, SocialNetworksAdmin)
 
