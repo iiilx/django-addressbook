@@ -59,8 +59,8 @@ class Contact(models.Model):
     organization = models.CharField(max_length = "50", blank = True)
     url = models.URLField(verify_exists = False, blank = True)    
     blurb = models.TextField(null=True, blank=True)
-    models.ImageField(upload_to="profile_images/", blank=True, null=True)
-    models.ImageField(upload_to="qr_images/", blank=True, null=True)
+    profile_image = models.ImageField(upload_to="profile_images/", blank=True, null=True)
+    qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
 
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
