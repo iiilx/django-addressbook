@@ -16,6 +16,6 @@ setup(
     url='https://github.com/iiilx/addressbook',
     license='BSD license, see LICENSE.txt',
     description='A django app that allows users to create contact groups and contacts, as well as views for displaying a contact in hcard format, downloading a vcard for the contact, a gravatar, and a QR code.', 
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     zip_safe=False,
 )
