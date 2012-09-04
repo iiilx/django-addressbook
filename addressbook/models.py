@@ -104,7 +104,7 @@ class Website(models.Model):
     def __unicode__(self):
         return "%s %s: %s" % (self.contact.first_name, self.type, self.website)
 
-class SocialNetworks(models.Model):
+class SocialNetwork(models.Model):
     contact = models.ForeignKey(Contact)
     handle = models.CharField(max_length = "50")
     type = models.CharField(max_length="20", choices = SOCNET_TYPES)

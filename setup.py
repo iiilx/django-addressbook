@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='django-addressbook',
-    version='0.1.1',
+    version='0.1.2',
     author=u'Ben Lee',
     author_email='ben86lee@gmail.com',
     packages=find_packages(),
