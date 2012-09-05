@@ -29,29 +29,29 @@ class ContactForm(ModelForm):
 class SocialNetworkForm(ModelForm):
     class Meta:
         model = SocialNetwork
-        fields = ('handle', 'type', 'privacy')
+        fields = ('handle', 'type', 'public_visible', 'contact_visible')
 
 class WebsiteForm(ModelForm):
     class Meta:
         model = Website
-        fields = ('website', 'type', 'privacy')
+        fields = ('website', 'type', 'public_visible', 'contact_visible')
 
 class EmailForm(ModelForm):
     class Meta:
         model = Email
-        fields = ('email', 'type')
+        fields = ('email', 'type', 'public_visible', 'contact_visible')
 
 class PhoneForm(ModelForm):
     class Meta:
         model = PhoneNumber
-        fields = ('phone', 'type')
+        fields = ('phone', 'type', 'public_visible', 'contact_visible')
 
 class AddressForm(ModelForm):
     zip = USZipCodeField()
     
     class Meta:
         model = Address
-        fields = ('street','city','state','zip', 'type')
+        fields = ('street','city','state','zip', 'type', 'public_visible', 'contact_visible')
 
 
 class MandatoryInlineFormSet(BaseInlineFormSet):

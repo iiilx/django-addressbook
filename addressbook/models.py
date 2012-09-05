@@ -19,11 +19,6 @@ EMAIL_TYPES = (
     ('Work', 'Work'),
 )
 
-PRIVACY_TYPES = (
-    ('Public', 'Public'),
-    ('Private', 'Private'),
-)
-
 WEBSITE_TYPES = (
     ('Work', 'Work'),
     ('Personal', 'Personal'),
@@ -72,7 +67,8 @@ class Address(models.Model):
     state = USStateField()
     zip = models.CharField(max_length = "10") 
     type = models.CharField(max_length="5", choices = ADR_TYPES)
-    privacy = models.CharField(max_length="10", choices = PRIVACY_TYPES)
+    public_visible = models.BooleanField(default=False)
+    contact_visible = models.BooleanField(default=False)
 
     def __unicode__(self):
         return '%s %s: %s %s, %s' % (self.contact.first_name, self.contact.last_name, self.street, self.city, self.state)
@@ -81,7 +77,8 @@ class PhoneNumber(models.Model):
     contact = models.ForeignKey(Contact)
     phone = PhoneNumberField()
     type = models.CharField(max_length="4", choices = TEL_TYPES)
-    privacy = models.CharField(max_length="10", choices = PRIVACY_TYPES)
+    public_visible = models.BooleanField(default=False)
+    contact_visible = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s %s: %s" % (self.contact.first_name, self.contact.last_name, self.phone)
@@ -89,8 +86,9 @@ class PhoneNumber(models.Model):
 class Email(models.Model):
     contact = models.ForeignKey(Contact)
     email = models.EmailField() 
-    type = models.CharField(max_length="8", choices = EMAIL_TYPES) 
-    privacy = models.CharField(max_length="10", choices = PRIVACY_TYPES)
+    type = models.CharField(max_length="8", choices = EMAIL_TYPES)
+    public_visible = models.BooleanField(default=False)
+    contact_visible = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s %s: %s" % (self.contact.first_name, self.contact.last_name, self.email)
@@ -98,8 +96,9 @@ class Email(models.Model):
 class Website(models.Model):
     contact = models.ForeignKey(Contact)
     website = models.URLField(verify_exists = False, blank = True)
-    type = models.CharField(max_length="20", choices = WEBSITE_TYPES) 
-    privacy = models.CharField(max_length="10", choices = PRIVACY_TYPES)
+    type = models.CharField(max_length="20", choices = WEBSITE_TYPES)
+    public_visible = models.BooleanField(default=False)
+    contact_visible = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s %s: %s" % (self.contact.first_name, self.type, self.website)
@@ -108,8 +107,9 @@ class SocialNetwork(models.Model):
     contact = models.ForeignKey(Contact)
     handle = models.CharField(max_length = "50")
     type = models.CharField(max_length="20", choices = SOCNET_TYPES)
-    privacy = models.CharField(max_length="10", choices = PRIVACY_TYPES)
+    public_visible = models.BooleanField(default=False)
+    contact_visible = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return "%s %s: %s" % (self.contact.first_name, self.type, self.website)
+        return "%s %s: %s" % (self.contact.first_name, self.type, self.handle)
 
