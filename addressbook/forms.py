@@ -79,9 +79,9 @@ WebsiteFormSet = formset_factory(WebsiteForm, max_num=3, formset=RequiredFormSet
 SocialNetworkFormSet = formset_factory(SocialNetworkForm, max_num=3, formset=RequiredFormSet)
 
 ContactFormSet = inlineformset_factory(ContactGroup, Contact, max_num=4, extra=1, can_delete = False)
-EmailEditFormSet = inlineformset_factory(Contact, Email, max_num=3, extra=0, formset=MandatoryInlineFormSet)
-PhoneEditFormSet = inlineformset_factory(Contact, PhoneNumber, max_num=3, extra=0, formset=MandatoryInlineFormSet)
-AddressEditFormSet = inlineformset_factory(Contact, Address, max_num=3, extra=0, formset=MandatoryInlineFormSet)
-WebsiteEditFormSet = inlineformset_factory(Contact, Website, max_num=3, extra=0, formset=MandatoryInlineFormSet)
-SocialNetworkEditFormSet = inlineformset_factory(Contact, SocialNetwork, max_num=3, extra=0, formset=MandatoryInlineFormSet)
+EmailEditFormSet = inlineformset_factory(Contact, Email, extra=1, formset=MandatoryInlineFormSet)
+PhoneEditFormSet = inlineformset_factory(Contact, PhoneNumber, extra=1, formset=MandatoryInlineFormSet)
+AddressEditFormSet = inlineformset_factory(Contact, Address, extra=1, formset=MandatoryInlineFormSet)
+WebsiteEditFormSet = inlineformset_factory(Contact, Website, extra=1, formset=MandatoryInlineFormSet)
+SocialNetworkEditFormSet = inlineformset_factory(Contact, SocialNetwork, extra=1, formset=MandatoryInlineFormSet)
 
