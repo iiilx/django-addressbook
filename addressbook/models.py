@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 from django.contrib.auth.models import User
+from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 
 ADR_TYPES = (
     ('Home', 'Home'),
@@ -66,7 +66,7 @@ class Address(models.Model):
     city = models.CharField(max_length = "40")
     state = USStateField()
     zip = models.CharField(max_length = "10") 
-    type = models.CharField(max_length="5", choices = ADR_TYPES)
+    type = models.CharField(max_length="20", choices = ADR_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
 
@@ -76,7 +76,7 @@ class Address(models.Model):
 class PhoneNumber(models.Model):
     contact = models.ForeignKey(Contact)
     phone = PhoneNumberField()
-    type = models.CharField(max_length="4", choices = TEL_TYPES)
+    type = models.CharField(max_length="20", choices = TEL_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
 
@@ -86,7 +86,7 @@ class PhoneNumber(models.Model):
 class Email(models.Model):
     contact = models.ForeignKey(Contact)
     email = models.EmailField() 
-    type = models.CharField(max_length="8", choices = EMAIL_TYPES)
+    type = models.CharField(max_length="20", choices = EMAIL_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
 
