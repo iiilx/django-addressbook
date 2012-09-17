@@ -29,9 +29,6 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length='40', blank=True)),
             ('organization', self.gf('django.db.models.fields.CharField')(max_length='50', blank=True)),
             ('url', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
-            ('blurb', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('profile_image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
-            ('qr_image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
         ))
         db.send_create_signal('addressbook', ['Contact'])
 
@@ -44,7 +41,6 @@ class Migration(SchemaMigration):
             ('state', self.gf('django.contrib.localflavor.us.models.USStateField')(max_length=2)),
             ('zip', self.gf('django.db.models.fields.CharField')(max_length='10')),
             ('type', self.gf('django.db.models.fields.CharField')(max_length='5')),
-            ('privacy', self.gf('django.db.models.fields.CharField')(max_length='10')),
         ))
         db.send_create_signal('addressbook', ['Address'])
 
@@ -54,7 +50,6 @@ class Migration(SchemaMigration):
             ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['addressbook.Contact'])),
             ('phone', self.gf('django.contrib.localflavor.us.models.PhoneNumberField')(max_length=20)),
             ('type', self.gf('django.db.models.fields.CharField')(max_length='4')),
-            ('privacy', self.gf('django.db.models.fields.CharField')(max_length='10')),
         ))
         db.send_create_signal('addressbook', ['PhoneNumber'])
 
@@ -64,29 +59,8 @@ class Migration(SchemaMigration):
             ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['addressbook.Contact'])),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
             ('type', self.gf('django.db.models.fields.CharField')(max_length='8')),
-            ('privacy', self.gf('django.db.models.fields.CharField')(max_length='10')),
         ))
         db.send_create_signal('addressbook', ['Email'])
-
-        # Adding model 'Website'
-        db.create_table('addressbook_website', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['addressbook.Contact'])),
-            ('website', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length='20')),
-            ('privacy', self.gf('django.db.models.fields.CharField')(max_length='10')),
-        ))
-        db.send_create_signal('addressbook', ['Website'])
-
-        # Adding model 'SocialNetwork'
-        db.create_table('addressbook_socialnetwork', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['addressbook.Contact'])),
-            ('handle', self.gf('django.db.models.fields.CharField')(max_length='50')),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length='20')),
-            ('privacy', self.gf('django.db.models.fields.CharField')(max_length='10')),
-        ))
-        db.send_create_signal('addressbook', ['SocialNetwork'])
 
 
     def backwards(self, orm):
@@ -108,12 +82,6 @@ class Migration(SchemaMigration):
         # Deleting model 'Email'
         db.delete_table('addressbook_email')
 
-        # Deleting model 'Website'
-        db.delete_table('addressbook_website')
-
-        # Deleting model 'SocialNetwork'
-        db.delete_table('addressbook_socialnetwork')
-
 
     models = {
         'addressbook.address': {
@@ -121,7 +89,6 @@ class Migration(SchemaMigration):
             'city': ('django.db.models.fields.CharField', [], {'max_length': "'40'"}),
             'contact': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['addressbook.Contact']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'privacy': ('django.db.models.fields.CharField', [], {'max_length': "'10'"}),
             'state': ('django.contrib.localflavor.us.models.USStateField', [], {'max_length': '2'}),
             'street': ('django.db.models.fields.CharField', [], {'max_length': "'50'"}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': "'5'"}),
@@ -129,15 +96,12 @@ class Migration(SchemaMigration):
         },
         'addressbook.contact': {
             'Meta': {'object_name': 'Contact'},
-            'blurb': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': "'40'"}),
             'group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['addressbook.ContactGroup']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': "'40'"}),
             'middle_name': ('django.db.models.fields.CharField', [], {'max_length': "'40'", 'blank': 'True'}),
             'organization': ('django.db.models.fields.CharField', [], {'max_length': "'50'", 'blank': 'True'}),
-            'profile_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'qr_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': "'40'", 'blank': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
         },
@@ -152,7 +116,6 @@ class Migration(SchemaMigration):
             'contact': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['addressbook.Contact']"}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'privacy': ('django.db.models.fields.CharField', [], {'max_length': "'10'"}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': "'8'"})
         },
         'addressbook.phonenumber': {
@@ -160,24 +123,7 @@ class Migration(SchemaMigration):
             'contact': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['addressbook.Contact']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'phone': ('django.contrib.localflavor.us.models.PhoneNumberField', [], {'max_length': '20'}),
-            'privacy': ('django.db.models.fields.CharField', [], {'max_length': "'10'"}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': "'4'"})
-        },
-        'addressbook.socialnetwork': {
-            'Meta': {'object_name': 'SocialNetwork'},
-            'contact': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['addressbook.Contact']"}),
-            'handle': ('django.db.models.fields.CharField', [], {'max_length': "'50'"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'privacy': ('django.db.models.fields.CharField', [], {'max_length': "'10'"}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': "'20'"})
-        },
-        'addressbook.website': {
-            'Meta': {'object_name': 'Website'},
-            'contact': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['addressbook.Contact']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'privacy': ('django.db.models.fields.CharField', [], {'max_length': "'10'"}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': "'20'"}),
-            'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
         },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -194,9 +140,8 @@ class Migration(SchemaMigration):
         },
         'auth.user': {
             'Meta': {'object_name': 'User'},
-            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '255', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

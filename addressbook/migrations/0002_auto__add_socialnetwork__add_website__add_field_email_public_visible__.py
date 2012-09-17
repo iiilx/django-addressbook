@@ -8,8 +8,27 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'Email.privacy'
-        db.delete_column('addressbook_email', 'privacy')
+        # Adding model 'SocialNetwork'
+        db.create_table('addressbook_socialnetwork', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['addressbook.Contact'])),
+            ('handle', self.gf('django.db.models.fields.CharField')(max_length='50')),
+            ('type', self.gf('django.db.models.fields.CharField')(max_length='20')),
+            ('public_visible', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('contact_visible', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal('addressbook', ['SocialNetwork'])
+
+        # Adding model 'Website'
+        db.create_table('addressbook_website', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['addressbook.Contact'])),
+            ('website', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
+            ('type', self.gf('django.db.models.fields.CharField')(max_length='20')),
+            ('public_visible', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('contact_visible', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal('addressbook', ['Website'])
 
         # Adding field 'Email.public_visible'
         db.add_column('addressbook_email', 'public_visible',
@@ -21,21 +40,36 @@ class Migration(SchemaMigration):
                       self.gf('django.db.models.fields.BooleanField')(default=False),
                       keep_default=False)
 
-        # Deleting field 'SocialNetwork.privacy'
-        db.delete_column('addressbook_socialnetwork', 'privacy')
 
-        # Adding field 'SocialNetwork.public_visible'
-        db.add_column('addressbook_socialnetwork', 'public_visible',
+        # Changing field 'Email.type'
+        db.alter_column('addressbook_email', 'type', self.gf('django.db.models.fields.CharField')(max_length='20'))
+        # Adding field 'PhoneNumber.public_visible'
+        db.add_column('addressbook_phonenumber', 'public_visible',
                       self.gf('django.db.models.fields.BooleanField')(default=False),
                       keep_default=False)
 
-        # Adding field 'SocialNetwork.contact_visible'
-        db.add_column('addressbook_socialnetwork', 'contact_visible',
+        # Adding field 'PhoneNumber.contact_visible'
+        db.add_column('addressbook_phonenumber', 'contact_visible',
                       self.gf('django.db.models.fields.BooleanField')(default=False),
                       keep_default=False)
 
-        # Deleting field 'Address.privacy'
-        db.delete_column('addressbook_address', 'privacy')
+
+        # Changing field 'PhoneNumber.type'
+        db.alter_column('addressbook_phonenumber', 'type', self.gf('django.db.models.fields.CharField')(max_length='20'))
+        # Adding field 'Contact.blurb'
+        db.add_column('addressbook_contact', 'blurb',
+                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Contact.profile_image'
+        db.add_column('addressbook_contact', 'profile_image',
+                      self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Contact.qr_image'
+        db.add_column('addressbook_contact', 'qr_image',
+                      self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True),
+                      keep_default=False)
 
         # Adding field 'Address.public_visible'
         db.add_column('addressbook_address', 'public_visible',
@@ -47,38 +81,16 @@ class Migration(SchemaMigration):
                       self.gf('django.db.models.fields.BooleanField')(default=False),
                       keep_default=False)
 
-        # Deleting field 'PhoneNumber.privacy'
-        db.delete_column('addressbook_phonenumber', 'privacy')
 
-        # Adding field 'PhoneNumber.public_visible'
-        db.add_column('addressbook_phonenumber', 'public_visible',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
-        # Adding field 'PhoneNumber.contact_visible'
-        db.add_column('addressbook_phonenumber', 'contact_visible',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
-        # Deleting field 'Website.privacy'
-        db.delete_column('addressbook_website', 'privacy')
-
-        # Adding field 'Website.public_visible'
-        db.add_column('addressbook_website', 'public_visible',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
-        # Adding field 'Website.contact_visible'
-        db.add_column('addressbook_website', 'contact_visible',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
+        # Changing field 'Address.type'
+        db.alter_column('addressbook_address', 'type', self.gf('django.db.models.fields.CharField')(max_length='20'))
 
     def backwards(self, orm):
-        # Adding field 'Email.privacy'
-        db.add_column('addressbook_email', 'privacy',
-                      self.gf('django.db.models.fields.CharField')(default='Private', max_length='10'),
-                      keep_default=False)
+        # Deleting model 'SocialNetwork'
+        db.delete_table('addressbook_socialnetwork')
+
+        # Deleting model 'Website'
+        db.delete_table('addressbook_website')
 
         # Deleting field 'Email.public_visible'
         db.delete_column('addressbook_email', 'public_visible')
@@ -86,21 +98,26 @@ class Migration(SchemaMigration):
         # Deleting field 'Email.contact_visible'
         db.delete_column('addressbook_email', 'contact_visible')
 
-        # Adding field 'SocialNetwork.privacy'
-        db.add_column('addressbook_socialnetwork', 'privacy',
-                      self.gf('django.db.models.fields.CharField')(default='Private', max_length='10'),
-                      keep_default=False)
 
-        # Deleting field 'SocialNetwork.public_visible'
-        db.delete_column('addressbook_socialnetwork', 'public_visible')
+        # Changing field 'Email.type'
+        db.alter_column('addressbook_email', 'type', self.gf('django.db.models.fields.CharField')(max_length='8'))
+        # Deleting field 'PhoneNumber.public_visible'
+        db.delete_column('addressbook_phonenumber', 'public_visible')
 
-        # Deleting field 'SocialNetwork.contact_visible'
-        db.delete_column('addressbook_socialnetwork', 'contact_visible')
+        # Deleting field 'PhoneNumber.contact_visible'
+        db.delete_column('addressbook_phonenumber', 'contact_visible')
 
-        # Adding field 'Address.privacy'
-        db.add_column('addressbook_address', 'privacy',
-                      self.gf('django.db.models.fields.CharField')(default='Private', max_length='10'),
-                      keep_default=False)
+
+        # Changing field 'PhoneNumber.type'
+        db.alter_column('addressbook_phonenumber', 'type', self.gf('django.db.models.fields.CharField')(max_length='4'))
+        # Deleting field 'Contact.blurb'
+        db.delete_column('addressbook_contact', 'blurb')
+
+        # Deleting field 'Contact.profile_image'
+        db.delete_column('addressbook_contact', 'profile_image')
+
+        # Deleting field 'Contact.qr_image'
+        db.delete_column('addressbook_contact', 'qr_image')
 
         # Deleting field 'Address.public_visible'
         db.delete_column('addressbook_address', 'public_visible')
@@ -108,28 +125,9 @@ class Migration(SchemaMigration):
         # Deleting field 'Address.contact_visible'
         db.delete_column('addressbook_address', 'contact_visible')
 
-        # Adding field 'PhoneNumber.privacy'
-        db.add_column('addressbook_phonenumber', 'privacy',
-                      self.gf('django.db.models.fields.CharField')(default='Private', max_length='10'),
-                      keep_default=False)
 
-        # Deleting field 'PhoneNumber.public_visible'
-        db.delete_column('addressbook_phonenumber', 'public_visible')
-
-        # Deleting field 'PhoneNumber.contact_visible'
-        db.delete_column('addressbook_phonenumber', 'contact_visible')
-
-        # Adding field 'Website.privacy'
-        db.add_column('addressbook_website', 'privacy',
-                      self.gf('django.db.models.fields.CharField')(default='Private', max_length='10'),
-                      keep_default=False)
-
-        # Deleting field 'Website.public_visible'
-        db.delete_column('addressbook_website', 'public_visible')
-
-        # Deleting field 'Website.contact_visible'
-        db.delete_column('addressbook_website', 'contact_visible')
-
+        # Changing field 'Address.type'
+        db.alter_column('addressbook_address', 'type', self.gf('django.db.models.fields.CharField')(max_length='5'))
 
     models = {
         'addressbook.address': {
@@ -141,7 +139,7 @@ class Migration(SchemaMigration):
             'public_visible': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'state': ('django.contrib.localflavor.us.models.USStateField', [], {'max_length': '2'}),
             'street': ('django.db.models.fields.CharField', [], {'max_length': "'50'"}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': "'5'"}),
+            'type': ('django.db.models.fields.CharField', [], {'max_length': "'20'"}),
             'zip': ('django.db.models.fields.CharField', [], {'max_length': "'10'"})
         },
         'addressbook.contact': {
@@ -171,7 +169,7 @@ class Migration(SchemaMigration):
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'public_visible': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': "'8'"})
+            'type': ('django.db.models.fields.CharField', [], {'max_length': "'20'"})
         },
         'addressbook.phonenumber': {
             'Meta': {'object_name': 'PhoneNumber'},
@@ -180,7 +178,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'phone': ('django.contrib.localflavor.us.models.PhoneNumberField', [], {'max_length': '20'}),
             'public_visible': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': "'4'"})
+            'type': ('django.db.models.fields.CharField', [], {'max_length': "'20'"})
         },
         'addressbook.socialnetwork': {
             'Meta': {'object_name': 'SocialNetwork'},
@@ -215,9 +213,8 @@ class Migration(SchemaMigration):
         },
         'auth.user': {
             'Meta': {'object_name': 'User'},
-            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '255', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
