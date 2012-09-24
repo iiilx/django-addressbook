@@ -1,7 +1,7 @@
-# Django-addressbook
+Django-addressbook
 --------------------
 
-## Features
+Features
 -----------
 
 * Allow users to register themselves via their Facebook, Twitter,
@@ -22,7 +22,7 @@ scanner to import it
 * A full unit test suite
 * The app is installable using standard Python distutils
 
-## Installing the app
+Installing the app
 ----------------------
     clone via git and python setup.py install
    
@@ -30,7 +30,7 @@ OR
 
     easy_install django-addressbook
 
-## Setting up the app
+Setting up the app
 ----------------------
 
 Assuming you have Django installed and this app installed (`easy_install django-addressbook`),
@@ -45,7 +45,7 @@ Assuming you have Django installed and this app installed (`easy_install django-
         `:~$ ln -s /path/to/addressbook/static/addressbook.css /path/to/proj/media/css/addressbook.css`
 6. (optional) override templates as necessary by creating an `addressbook` directory
 
-## NOTES
+NOTES
 ---------
 
 vCard Format: **http://www.ietf.org/rfc/rfc2426.txt**
