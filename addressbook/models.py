@@ -28,6 +28,7 @@ WEBSITE_TYPES = (
 
 SOCNET_TYPES = (
     ('Skype', 'Skype'),
+    ('Twitter', 'Twitter'),
     ('LinkedIn', 'LinkedIn'),
     ('Facebook', 'Facebook'),
     ('Instagram', 'Instagram'),
