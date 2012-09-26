@@ -57,6 +57,7 @@ class Contact(models.Model):
     blurb = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to="profile_images/", blank=True, null=True)
     qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
+    twitter_handle = models.CharField(max_length = "50", blank=True, null=True)
 
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
