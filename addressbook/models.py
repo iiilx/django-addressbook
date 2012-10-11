@@ -9,9 +9,10 @@ ADR_TYPES = (
 
 TEL_TYPES = (
     ('Mobile', 'Mobile'),
-    ('Home', 'Home'),
+    ('Work', 'Work'),
     ('Office', 'Office'),
     ('Fax', 'Fax'),
+    ('Skype', 'Skype'),
 )
 
 EMAIL_TYPES = (
