@@ -1,4 +1,3 @@
-import os
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
@@ -47,11 +46,6 @@ class ContactGroup(models.Model):
     def __unicode__(self):
         return self.name   
 
-def upload_to(instance, filename):
-    user_id = instance.group.user.id
-    file_path = os.path.join('avatars', str(user_id), filename)
-    return file_path
-
 class Contact(models.Model):
     group = models.ForeignKey(ContactGroup) 
     last_name = models.CharField(max_length = "40", blank=False)
@@ -61,7 +55,7 @@ class Contact(models.Model):
     organization = models.CharField(max_length = "50", blank = True)
     url = models.URLField(verify_exists = False, blank = True)    
     blurb = models.TextField(null=True, blank=True)
-    profile_image = models.ImageField(upload_to=upload_to, blank=True, null=True)
+    profile_image = models.ImageField(upload_to="profile_images/", blank=True, null=True)
     qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
     twitter_handle = models.CharField(max_length = "50", blank=True, null=True)
 
