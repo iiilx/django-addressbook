@@ -177,10 +177,11 @@ def _vcard_string2(contact):
     pass 
 
 @login_required
-def download_vcard(request, pk):
+def download_vcard(request):
     """
     View function for returning single vcard
     """
+    pk = request.GET.get('id');
     contact = Contact.objects.get(pk=pk)
     output = _vcard_string(contact)
     filename = "%s%s.vcf" % (contact.first_name, contact.last_name)
