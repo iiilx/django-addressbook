@@ -166,10 +166,11 @@ def _vcard_string(contact):
         p = v.add('tel')
         p.value = phone.phone
         p.type_param = phone.type
-    url = contact.url
-    if url:
-        v.add('url')
-        v.url.value = contact.url
+    websites = Website.objects.filter(contact=contact)
+    for web in websites:
+        u = v.add('url')
+        u.value = web.website
+        u.type_param = web.type
     output = v.serialize()
     return output
 
