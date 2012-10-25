@@ -78,6 +78,7 @@ class VCard(object):
             w.type_param = web.type
 
     def output_string(self):
+        """ Executes all the `add_` methods and serializes the vcard"""
         methods = [ k for k in dict(VCard.__dict__).keys() if k.startswith('add_') ]
         for m in methods:
             getattr(self, m)()
