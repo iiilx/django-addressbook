@@ -1,9 +1,8 @@
 import hashlib
-import vobject
-
-from django.views.generic.simple import direct_to_template
+from helper import VCard
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic.simple import direct_to_template
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 
 from addressbook.models import *
@@ -127,56 +126,6 @@ def single_contact(request, pk):
     else:
         raise Http404
 
-def _vcard_string(contact):
-    """
-    Helper function for vcard views. Accepts a 'contact' object 
-    with certain attributes (firstname, lastname, email, phone, id)
-    and returns a string containing serialized vCard data.
-    """
-    v = vobject.vCard()
-    v.behavior.sortFirst = ('version', 'prodid' ,'uid', 'n', 'fn', 'org', 'title', 'photo', 'tel', 'adr', 'email')
-    v.add('n')
-    v.n.value = vobject.vcard.Name(family=contact.last_name, given=contact.first_name, additional=contact.middle_name)
-    v.add('fn')
-    if contact.middle_name:
-        initial = contact.middle_name[0].upper()
-        v.fn.value = "%s %s. %s" % (contact.first_name, initial, contact.last_name)
-    else:
-        v.fn.value = "%s %s" % (contact.first_name, contact.last_name)
-    org = contact.organization
-    if org:
-        v.add('org')
-        v.org.value = [org]
-    addresses = Address.objects.filter(contact=contact)
-    title = contact.title
-    if title:
-        v.add('title')
-        v.title.value = title
-    for address in addresses:
-        a = v.add('adr')
-        a.value = vobject.vcard.Address(street=address.street, city=address.city, region= address.state, code = address.zip, country = "United States" )
-        a.type_param = address.type
-    emails = Email.objects.filter(contact=contact)
-    for email in emails:
-        e = v.add('email')
-        e.value = email.email
-        e.type_param = email.type
-    phones = PhoneNumber.objects.filter(contact=contact)
-    for phone in phones:
-        p = v.add('tel')
-        p.value = phone.phone
-        p.type_param = phone.type
-    websites = Website.objects.filter(contact=contact)
-    for web in websites:
-        u = v.add('url')
-        u.value = web.website
-        u.type_param = web.type
-    output = v.serialize()
-    return output
-
-def _vcard_string2(contact):
-    pass 
-
 @login_required
 def download_vcard(request):
     """
@@ -184,9 +133,8 @@ def download_vcard(request):
     """
     pk = request.GET.get('id');
     contact = Contact.objects.get(pk=pk)
-    output = _vcard_string(contact)
+    output = VCard(contact).output_string()
     filename = "%s%s.vcf" % (contact.first_name, contact.last_name)
     response = HttpResponse(output, mimetype="text/x-vCard")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
-
