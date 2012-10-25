@@ -2,6 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 
+from django.utils.functional import LazyObject
+from django.core.files.storage import get_storage_class
+
+class AvatarStorage(LazyObject):
+    def _setup(self):
+        AVATAR_FILE_STORAGE = getattr(settings, 'AVATAR_FILE_STORAGE', settings.DEFAULT_FILE_STORAGE)
+        self._wrapped = get_storage_class(AVATAR_FILE_STORAGE)()
+
+avatar_storage = AvatarStorage()
+
 ADR_TYPES = (
     ('Home', 'Home'),
     ('Work', 'Work'),
@@ -60,6 +70,11 @@ class Contact(models.Model):
     qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
     twitter_handle = models.CharField(max_length = "50", blank=True, null=True)
 
+	def __init__(self, *args, **kwargs):
+        super(Contact, self).__init__(*args, **kwargs)
+        self.profile_image.storage = avatar_storage
+		self.profile_image.thumbnail_storage = avatar_storage
+	
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
