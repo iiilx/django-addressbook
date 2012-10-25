@@ -138,4 +138,3 @@ def download_vcard(request, vcard=VCard):
     response = HttpResponse(output, mimetype="text/x-vCard")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
-

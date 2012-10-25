@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 
@@ -44,6 +45,15 @@ SOCNET_TYPES = (
     ('Facebook', 'Facebook'),
     ('Instagram', 'Instagram'),
     ('Pinterest', 'Pinterest'),
+)
+
+social_net_prefixes = dict(
+    Skype = 'skype:',
+    Twitter = 'https://twitter.com/',
+    LinkedIn = 'http://linkedin.com/',
+    Facebook = 'http://www.facebook.com/',
+    Instagram = 'http://www.instagram.com/',
+    Pinterest = 'http://www.pinterest.com/',
 )
 
 
@@ -128,6 +138,11 @@ class SocialNetwork(models.Model):
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
 
+    @property
+    def url(self):
+        prefixes = social_net_prefixes
+        prefix = getattr(settings, '%s_PREFIX' % self.type.upper(), prefixes[self.type])
+        return '%s%s' % (prefix, self.handle)
+
     def __unicode__(self):
         return "%s %s: %s" % (self.contact.first_name, self.type, self.handle)
-
