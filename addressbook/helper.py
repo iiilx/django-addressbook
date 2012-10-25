@@ -77,6 +77,15 @@ class VCard(object):
             w.value = web.website
             w.type_param = web.type
 
+    def add_socialnetworks(self):
+        contact = self.contact
+        card = self.card
+        social_nets = SocialNetwork.objects.filter(contact=contact)
+        for social in social_nets:
+            s = card.add('url')
+            s.value = social.url
+            s.type_param = social.type
+
     def output_string(self):
         """ Executes all the `add_` methods and serializes the vcard"""
         methods = [ k for k in dict(VCard.__dict__).keys() if k.startswith('add_') ]
