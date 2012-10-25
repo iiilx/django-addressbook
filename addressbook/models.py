@@ -70,11 +70,11 @@ class Contact(models.Model):
     qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
     twitter_handle = models.CharField(max_length = "50", blank=True, null=True)
 
-	def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Contact, self).__init__(*args, **kwargs)
         self.profile_image.storage = avatar_storage
-		self.profile_image.thumbnail_storage = avatar_storage
-	
+        self.profile_image.thumbnail_storage = avatar_storage
+
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
