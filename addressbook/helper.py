@@ -1,4 +1,5 @@
 import vobject
+import inspect
 from addressbook.models import *
 
 class VCard(object):
@@ -88,7 +89,7 @@ class VCard(object):
 
     def output_string(self):
         """ Executes all the `add_` methods and serializes the vcard"""
-        methods = [ k for k in dict(VCard.__dict__).keys() if k.startswith('add_') ]
+        methods = [ k for k in dict(inspect.getmembers(self)).keys() if k.startswith('add_') ]
         for m in methods:
             getattr(self, m)()
         return self.card.serialize()
