@@ -78,7 +78,7 @@ class Contact(models.Model):
     organization = models.CharField(max_length = "50", blank = True)
     url = models.URLField(verify_exists = False, blank = True)    
     blurb = models.TextField(null=True, blank=True)
-    profile_image = models.ThumbnailerImageField(upload_to="profile_images/", blank=True, null=True)
+    profile_image = ThumbnailerImageField(upload_to="profile_images/", blank=True, null=True)
     qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
     twitter_handle = models.CharField(max_length = "50", blank=True, null=True)
 
