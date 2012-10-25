@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 
+from django.conf import settings
 from django.utils.functional import LazyObject
 from django.core.files.storage import get_storage_class
 
