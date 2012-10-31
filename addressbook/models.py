@@ -23,7 +23,6 @@ ADR_TYPES = (
 TEL_TYPES = (
     ('Mobile', 'Mobile'),
     ('Work', 'Work'),
-    ('Office', 'Office'),
     ('Fax', 'Fax'),
     ('Skype', 'Skype'),
 )
