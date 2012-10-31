@@ -102,7 +102,7 @@ class Address(models.Model):
 
 class PhoneNumber(models.Model):
     contact = models.ForeignKey(Contact)
-    phone = PhoneNumberField()
+    phone = models.CharField(max_length="20")
     type = models.CharField(max_length="20", choices = TEL_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
