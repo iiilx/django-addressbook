@@ -134,7 +134,7 @@ def download_vcard(request, vcard=VCard):
     pk = request.GET.get('id');
     contact = Contact.objects.get(pk=pk)
     output = vcard(contact).output_string()
-    filename = "%s%s.vcf" % (contact.first_name, contact.last_name)
+    filename = "contact_%s%s.vcf" % (contact.first_name, contact.last_name)
     response = HttpResponse(output, mimetype="text/x-vCard")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
