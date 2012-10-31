@@ -44,7 +44,6 @@ SOCNET_TYPES = (
     ('Twitter', 'Twitter'),
     ('LinkedIn', 'LinkedIn'),
     ('Facebook', 'Facebook'),
-    ('Instagram', 'Instagram'),
     ('Pinterest', 'Pinterest'),
 )
 
@@ -53,7 +52,6 @@ social_net_prefixes = dict(
     Twitter = 'https://twitter.com/',
     LinkedIn = 'http://linkedin.com/',
     Facebook = 'http://www.facebook.com/',
-    Instagram = 'http://www.instagram.com/',
     Pinterest = 'http://www.pinterest.com/',
 )
 
