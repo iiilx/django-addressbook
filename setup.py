@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='django-addressbook',
-    version='0.1.3',
+    version='0.1.31',
     author=u'Ben Lee',
     author_email='ben86lee@gmail.com',
     packages=find_packages(),
@@ -12,6 +12,7 @@ setup(
     install_requires = [
     'vobject',
     'django-uni-form',
+    'easy-thumbnails',
     ],
     url='https://github.com/iiilx/addressbook',
     license='BSD license, see LICENSE.txt',

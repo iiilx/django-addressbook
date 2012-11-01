@@ -1,6 +1,19 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
+from easy_thumbnails.fields import ThumbnailerImageField
+
+from django.conf import settings
+from django.utils.functional import LazyObject
+from django.core.files.storage import get_storage_class
+
+class AvatarStorage(LazyObject):
+    def _setup(self):
+        AVATAR_FILE_STORAGE = getattr(settings, 'AVATAR_FILE_STORAGE', settings.DEFAULT_FILE_STORAGE)
+        self._wrapped = get_storage_class(AVATAR_FILE_STORAGE)()
+
+avatar_storage = AvatarStorage()
 
 ADR_TYPES = (
     ('Home', 'Home'),
@@ -9,9 +22,9 @@ ADR_TYPES = (
 
 TEL_TYPES = (
     ('Mobile', 'Mobile'),
-    ('Home', 'Home'),
-    ('Office', 'Office'),
+    ('Work', 'Work'),
     ('Fax', 'Fax'),
+    ('Skype', 'Skype'),
 )
 
 EMAIL_TYPES = (
@@ -28,10 +41,18 @@ WEBSITE_TYPES = (
 
 SOCNET_TYPES = (
     ('Skype', 'Skype'),
+    ('Twitter', 'Twitter'),
     ('LinkedIn', 'LinkedIn'),
     ('Facebook', 'Facebook'),
-    ('Instagram', 'Instagram'),
     ('Pinterest', 'Pinterest'),
+)
+
+social_net_prefixes = dict(
+    Skype = 'skype:',
+    Twitter = 'https://twitter.com/',
+    LinkedIn = 'http://linkedin.com/',
+    Facebook = 'http://www.facebook.com/',
+    Pinterest = 'http://www.pinterest.com/',
 )
 
 
@@ -54,8 +75,14 @@ class Contact(models.Model):
     organization = models.CharField(max_length = "50", blank = True)
     url = models.URLField(verify_exists = False, blank = True)    
     blurb = models.TextField(null=True, blank=True)
-    profile_image = models.ImageField(upload_to="profile_images/", blank=True, null=True)
+    profile_image = ThumbnailerImageField(upload_to="profile_images/", blank=True, null=True)
     qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
+    twitter_handle = models.CharField(max_length = "50", blank=True, null=True)
+
+    def __init__(self, *args, **kwargs):
+        super(Contact, self).__init__(*args, **kwargs)
+        self.profile_image.storage = avatar_storage
+        self.profile_image.thumbnail_storage = avatar_storage
 
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
@@ -75,7 +102,7 @@ class Address(models.Model):
 
 class PhoneNumber(models.Model):
     contact = models.ForeignKey(Contact)
-    phone = PhoneNumberField()
+    phone = models.CharField(max_length="20")
     type = models.CharField(max_length="20", choices = TEL_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
@@ -110,6 +137,11 @@ class SocialNetwork(models.Model):
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
 
+    @property
+    def url(self):
+        prefixes = social_net_prefixes
+        prefix = getattr(settings, '%s_PREFIX' % self.type.upper(), prefixes[self.type])
+        return '%s%s' % (prefix, self.handle)
+
     def __unicode__(self):
         return "%s %s: %s" % (self.contact.first_name, self.type, self.handle)
-
