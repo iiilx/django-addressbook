@@ -12,6 +12,7 @@ setup(
     install_requires = [
     'vobject',
     'django-uni-form',
+    'easy-thumbnails',
     ],
     url='https://github.com/iiilx/addressbook',
     license='BSD license, see LICENSE.txt',
