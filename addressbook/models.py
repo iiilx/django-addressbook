@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
+from django_localflavor_us.models import USStateField, PhoneNumberField
 from easy_thumbnails.fields import ThumbnailerImageField
 
 from django.conf import settings
@@ -73,7 +73,7 @@ class Contact(models.Model):
     middle_name = models.CharField(max_length = "40", blank = True)
     title = models.CharField(max_length = "40", blank = True)
     organization = models.CharField(max_length = "50", blank = True)
-    url = models.URLField(verify_exists = False, blank = True)    
+    url = models.URLField(blank=True)
     blurb = models.TextField(null=True, blank=True)
     profile_image = ThumbnailerImageField(upload_to="profile_images/", blank=True, null=True)
     qr_image = models.ImageField(upload_to="qr_images/", blank=True, null=True)
@@ -122,7 +122,7 @@ class Email(models.Model):
 
 class Website(models.Model):
     contact = models.ForeignKey(Contact)
-    website = models.URLField(verify_exists = False, blank = True)
+    website = models.URLField(blank=True)
     type = models.CharField(max_length="20", choices = WEBSITE_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
