@@ -1,12 +1,11 @@
-from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
 from django_localflavor_us.models import USStateField, PhoneNumberField
+from django.core.files.storage import get_storage_class
+from django.db import models
+from django.utils.functional import LazyObject
 from easy_thumbnails.fields import ThumbnailerImageField
 
-from django.conf import settings
-from django.utils.functional import LazyObject
-from django.core.files.storage import get_storage_class
+
 
 class AvatarStorage(LazyObject):
     def _setup(self):
@@ -57,7 +56,7 @@ social_net_prefixes = dict(
 
 
 class ContactGroup(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length = "40", verbose_name = 'Group Name')
 
     class Meta:
