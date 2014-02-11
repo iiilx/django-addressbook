@@ -3,3 +3,4 @@ django_addressbook.egg-info
 dist
 /.project
 /.pydevproject
+/.settings
