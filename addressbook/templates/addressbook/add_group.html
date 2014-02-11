@@ -12,7 +12,7 @@
 {% include "addressbook/links.html" %}
 
 <div class="wrapper">
-<form action="{% url addressbook_add_group %}" method="post" class="uniForm"> {% csrf_token %}
+<form action="{% url "addressbook_add_group" %}" method="post" class="uniForm"> {% csrf_token %}
 <fieldset class="inlineLabels">
 <div class="dark">Add a contact group</div>
 {{ form|as_uni_form }}
