@@ -129,7 +129,7 @@ def single_contact(request, pk):
                 RequestContext(request, {
                     'contact':contact, 'emails':emails, 'hash':hash,
                     'addresses':addresses, 'phones':phones,
-                    'vcard_str': _vcard_string(contact),
+                    'vcard_str': str(VCard(contact)),
                 }))
     elif request.method=="POST":
         contact.delete()
