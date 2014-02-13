@@ -61,7 +61,7 @@ class TestModelsTestCase(TestCase):
         self.login_req_uris=['/addressbook/','/addressbook/group/add','/addressbook/contact/add',
               '/addressbook/contact/%s/edit', '/addressbook/contact/%s/view',
               '/addressbook/contact/%s/download']
-        self.no_login_req_uris = ['/']
+        self.no_login_req_uris = [ ] # there are no URLs available for not logged in visitors now
         self.client = Client()
         self.logged_client = Client()
         self.logged_client.login(username='john', password='abc')
@@ -129,7 +129,6 @@ class TestModelsTestCase(TestCase):
         self.assertEqual(Contact.objects.filter(group__user = self.user).count(), 3)
 
     def test_no_login_req_URLS(self):
-        uris=['/'] #, '/addressbook/', '/addressbook/group/add']
         for uri in self.no_login_req_uris:
             response = self.client.get(uri)
             self.failUnlessEqual(response.status_code, 200)
