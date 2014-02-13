@@ -11,7 +11,7 @@ setup(
     include_package_data=True,
     install_requires = [
         'vobject',
-        'django-uni-form',
+        'django-crispy-forms',
         'easy-thumbnails',
         'django-localflavor-us',
     ],
