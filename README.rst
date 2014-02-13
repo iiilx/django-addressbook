@@ -39,12 +39,11 @@ Assuming you have Django installed and this app installed (`easy_install django-
 2. Add addressbook.urls to your urls:
     `url(r'^addressbook/', include('addressbook.urls')),`
 3. Add your site domain in settings.py: `DOMAIN = 'example.com'`
-4. Ensure that you have base.html template in your templates folder
-5. Sym-link uni_form media: ln -s /path/to/uni_form/static/uni_form /path/to/project/media/uni_form
+4. Sym-link uni_form media: ln -s /path/to/uni_form/static/uni_form /path/to/project/media/uni_form
    (setup may differ depending on your MEDIA_URL)
-6. (optional) sym-link the sample css file for nicer looking forms (this may override your css): 
+5. (optional) sym-link the sample css file for nicer looking forms (this may override your css): 
         `:~$ ln -s /path/to/addressbook/static/addressbook.css /path/to/proj/media/css/addressbook.css`
-7. (optional) override templates as necessary by creating an `addressbook` directory
+6. (optional) override templates as necessary by creating an `addressbook` directory
 
 NOTES
 ---------
