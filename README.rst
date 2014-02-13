@@ -44,6 +44,7 @@ Assuming you have Django installed and this app installed (`easy_install django-
 5. (optional) sym-link the sample css file for nicer looking forms (this may override your css): 
         `:~$ ln -s /path/to/addressbook/static/addressbook.css /path/to/proj/media/css/addressbook.css`
 6. (optional) override templates as necessary by creating an `addressbook` directory
+7. (optional) `pip install tox` for runing tests (check http://tox.readthedocs.org/en/latest/ for more info)
 
 NOTES
 ---------
