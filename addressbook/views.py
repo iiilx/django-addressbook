@@ -77,7 +77,7 @@ def edit_contact(request, pk):
         address_formset = AddressEditFormSet(request.POST, instance = contact, prefix="address")
         email_formset = EmailEditFormSet(request.POST, instance = contact, prefix="email")
         if (contact_form.is_valid() and email_formset.is_valid() and
-            address_formset.is_valid() and email_formset.is_valid()):
+            address_formset.is_valid() and phone_formset.is_valid()):
             contact_form.save()
             email_formset.save()
             address_formset.save()     
