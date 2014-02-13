@@ -8,8 +8,8 @@ import sys
 
 
 if __name__ == "__main__":
-	os.environ["DJANGO_SETTINGS_MODULE"] = "addressbook.testsettings"
+    os.environ["DJANGO_SETTINGS_MODULE"] = "addressbook.testsettings"
 
-	from django.core.management import execute_from_command_line
+    from django.core.management import execute_from_command_line
 
-	execute_from_command_line(sys.argv)
+    execute_from_command_line(sys.argv)
