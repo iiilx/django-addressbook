@@ -17,7 +17,7 @@
     <div class="body">
     {% if contacts %}
         {% for contact in contacts %}
-        <p><a href="{% url addressbook_single_contact contact.id %}">{{ contact.first_name }} {{ contact.last_name }}</a></p>
+        <p><a href="{% url "addressbook_single_contact" contact.id %}">{{ contact.first_name }} {{ contact.last_name }}</a></p>
         {% endfor %}
     {% else %}
         <p>None</p>

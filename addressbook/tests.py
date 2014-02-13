@@ -1,10 +1,12 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test import TestCase
 from django.test.client import Client
-from django.db import IntegrityError, DatabaseError
 
+from addressbook.helper import VCard
 from addressbook.models import *
-from addressbook.views import _vcard_string, get_hash
+from addressbook.views import get_hash
+
+
 
 class TestModelsTestCase(TestCase):
     def setUp(self):
@@ -195,7 +197,7 @@ class TestModelsTestCase(TestCase):
         self.failUnlessEqual(hash,'0bc83cb571cd1c50ba6f3e8a78ef1346')
 
     def test_vcard_algo(self):
-        output = _vcard_string(self.contact1).splitlines()
+        output = str(VCard(self.contact1)).splitlines()
         expected = 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:Smith;Sven;;;\r\nFN:Sven Smith\r\nORG:FDA\r\nTEL;TYPE=WORK:212-123-1234\r\nTEL;TYPE=HOME:410-123-3455\r\nADR;TYPE=HOME:;;543 Cameron Run Terrace;Arlington;VA;22313;United States\r\nADR;TYPE=WORK:;;2000 Hunt Ave;Arlington;VA;22313;United States\r\nEMAIL;TYPE=WORK:Sven@gmail.com\r\nEMAIL;TYPE=HOME:blah@gmail.com\r\nURL:http://fda.gov\r\nEND:VCARD\r\n' 
         expected = expected.splitlines()
         good = True

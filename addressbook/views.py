@@ -1,12 +1,16 @@
 import hashlib
-from helper import VCard
-from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
-from django.views.generic.simple import direct_to_template
-from django.http import Http404, HttpResponse, HttpResponseRedirect
 
-from addressbook.models import *
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.template.context import RequestContext
+
 from addressbook.forms import *
+from addressbook.models import *
+from helper import VCard
+
+
 
 @login_required
 def add_group(request):
@@ -19,7 +23,8 @@ def add_group(request):
             form.save()
 #            request.user.message_set.create(message = 'Successfully saved group.')
             return HttpResponseRedirect(reverse('addressbook_index'))
-    return direct_to_template(request, 'addressbook/add_group.html', {'form':form})
+    return render(request, 'addressbook/add_group.html',
+            RequestContext(request, {'form':form}))
 
  
 @login_required
@@ -54,9 +59,11 @@ def add_contact(request):
         email_formset = EmailFormSet(prefix="email")
         phone_formset = PhoneFormSet(prefix="phone")
         address_formset = AddressFormSet(prefix="address")
-    return direct_to_template(request, 'addressbook/add_contact.html', {
-        'phone_formset':phone_formset, 'contact_form':contact_form,
-        'email_formset':email_formset, 'address_formset':address_formset})
+    return render(request, 'addressbook/add_contact.html',
+            RequestContext(request, {
+                'phone_formset':phone_formset, 'contact_form':contact_form,
+                'email_formset':email_formset, 'address_formset':address_formset
+            }))
 
 @login_required
 def edit_contact(request, pk):
@@ -81,25 +88,27 @@ def edit_contact(request, pk):
         phone_formset = PhoneEditFormSet(instance = contact, prefix="phone") 
         address_formset = AddressEditFormSet(instance = contact, prefix="address") 
         email_formset = EmailEditFormSet(instance = contact, prefix="email") 
-    return direct_to_template(request, 'addressbook/edit_contact.html', {
-        'email_formset':email_formset, 'phone_formset':phone_formset,
-        'address_formset':address_formset, 'contact_form':contact_form,
-        'contact':contact
-        })
+    return render(request, 'addressbook/edit_contact.html',
+            RequestContext(request, {
+                'email_formset':email_formset, 'phone_formset':phone_formset,
+                'address_formset':address_formset, 'contact_form':contact_form,
+                'contact':contact
+            }))
 
 @login_required
 def index(request):
     groups = ContactGroup.objects.filter(user=request.user)
     contacts = Contact.objects.filter(group__user=request.user)
     tup = [(group.name, Contact.objects.filter(group = group).order_by('last_name','first_name')) for group in groups]
-    return direct_to_template(request, 'addressbook/index.html', {'tup':tup, 'contacts':contacts})
+    return render(request, 'addressbook/index.html',
+            RequestContext(request, {'tup':tup, 'contacts':contacts}))
 
 def get_hash(str):
     str = str.lower().strip()
     md5 = hashlib.md5()
     md5.update(str)
     return md5.hexdigest()
-    
+
 @login_required
 def single_contact(request, pk):
     contact = Contact.objects.get(pk = pk)
@@ -116,10 +125,12 @@ def single_contact(request, pk):
         if addresses:
             address = addresses[0]
         phones = PhoneNumber.objects.filter(contact=contact)
-        return direct_to_template(request, 'addressbook/single_contact.html', {
-            'contact':contact, 'emails':emails, 'hash':hash, 'addresses':addresses,
-            'phones':phones, 'vcard_str': _vcard_string(contact),
-        })
+        return render(request, 'addressbook/single_contact.html',
+                RequestContext(request, {
+                    'contact':contact, 'emails':emails, 'hash':hash,
+                    'addresses':addresses, 'phones':phones,
+                    'vcard_str': str(VCard(contact)),
+                }))
     elif request.method=="POST":
         contact.delete()
         return HttpResponseRedirect(reverse('addressbook_index'))    

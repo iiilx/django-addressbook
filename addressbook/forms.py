@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from django.contrib.localflavor.us.forms import USZipCodeField
+from django_localflavor_us.forms import USZipCodeField
 from django.forms.formsets import BaseFormSet, formset_factory
 from django.forms.models import inlineformset_factory, BaseInlineFormSet 
 from django.forms import ValidationError
