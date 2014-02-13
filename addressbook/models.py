@@ -60,13 +60,13 @@ class ContactGroup(models.Model):
     name = models.CharField(max_length = "40", verbose_name = 'Group Name')
 
     class Meta:
-        unique_together = ('user','name') 
+        unique_together = ('user','name')
 
     def __unicode__(self):
-        return self.name   
+        return self.name
 
 class Contact(models.Model):
-    group = models.ForeignKey(ContactGroup) 
+    group = models.ForeignKey(ContactGroup)
     last_name = models.CharField(max_length = "40", blank=False)
     first_name = models.CharField(max_length = "40", blank=False)
     middle_name = models.CharField(max_length = "40", blank = True)
@@ -91,7 +91,7 @@ class Address(models.Model):
     street = models.CharField(max_length = "50")
     city = models.CharField(max_length = "40")
     state = USStateField()
-    zip = models.CharField(max_length = "10") 
+    zip = models.CharField(max_length = "10")
     type = models.CharField(max_length="20", choices = ADR_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
@@ -108,10 +108,10 @@ class PhoneNumber(models.Model):
 
     def __unicode__(self):
         return "%s %s: %s" % (self.contact.first_name, self.contact.last_name, self.phone)
-   
+
 class Email(models.Model):
     contact = models.ForeignKey(Contact)
-    email = models.EmailField() 
+    email = models.EmailField()
     type = models.CharField(max_length="20", choices = EMAIL_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
