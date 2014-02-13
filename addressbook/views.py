@@ -138,11 +138,10 @@ def single_contact(request, pk):
         raise Http404
 
 @login_required
-def download_vcard(request, vcard=VCard):
+def download_vcard(request, pk, vcard=VCard):
     """
     View function for returning single vcard
     """
-    pk = request.GET.get('id');
     contact = Contact.objects.get(pk=pk)
     output = vcard(contact).output_string()
     filename = "contact_%s%s.vcf" % (contact.first_name, contact.last_name)

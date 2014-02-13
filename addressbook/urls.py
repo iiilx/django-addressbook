@@ -12,6 +12,6 @@ urlpatterns = patterns('addressbook.views',
             name='addressbook_edit_contact'),
     url(r'^contact/(?P<pk>\d+)/view$', 'single_contact',
             name='addressbook_single_contact'),
-    url(r'^contact/download$', 'download_vcard',
+    url(r'^contact/(?P<pk>\d+)/download$', 'download_vcard',
             name='addressbook_download_vcard'),
 )
