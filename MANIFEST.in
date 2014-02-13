@@ -1,2 +1,2 @@
-include *.txt
+include *.txt README.rst
 recursive-include addressbook *.py *.html *.css
