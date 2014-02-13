@@ -66,7 +66,7 @@ class ContactGroup(models.Model):
         return self.name
 
 class Contact(models.Model):
-    group = models.ForeignKey(ContactGroup)
+    group = models.ForeignKey(ContactGroup, related_name='contacts')
     last_name = models.CharField(max_length = "40", blank=False)
     first_name = models.CharField(max_length = "40", blank=False)
     middle_name = models.CharField(max_length = "40", blank = True)
@@ -87,7 +87,7 @@ class Contact(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
 class Address(models.Model):
-    contact = models.ForeignKey(Contact)
+    contact = models.ForeignKey(Contact, related_name='addresses')
     street = models.CharField(max_length = "50")
     city = models.CharField(max_length = "40")
     state = USStateField()
@@ -100,7 +100,7 @@ class Address(models.Model):
         return '%s %s: %s %s, %s' % (self.contact.first_name, self.contact.last_name, self.street, self.city, self.state)
 
 class PhoneNumber(models.Model):
-    contact = models.ForeignKey(Contact)
+    contact = models.ForeignKey(Contact, related_name='phones')
     phone = models.CharField(max_length="20")
     type = models.CharField(max_length="20", choices = TEL_TYPES)
     public_visible = models.BooleanField(default=False)
@@ -110,7 +110,7 @@ class PhoneNumber(models.Model):
         return "%s %s: %s" % (self.contact.first_name, self.contact.last_name, self.phone)
 
 class Email(models.Model):
-    contact = models.ForeignKey(Contact)
+    contact = models.ForeignKey(Contact, related_name='emails')
     email = models.EmailField()
     type = models.CharField(max_length="20", choices = EMAIL_TYPES)
     public_visible = models.BooleanField(default=False)
@@ -120,7 +120,7 @@ class Email(models.Model):
         return "%s %s: %s" % (self.contact.first_name, self.contact.last_name, self.email)
 
 class Website(models.Model):
-    contact = models.ForeignKey(Contact)
+    contact = models.ForeignKey(Contact, related_name='websites')
     website = models.URLField(blank=True)
     type = models.CharField(max_length="20", choices = WEBSITE_TYPES)
     public_visible = models.BooleanField(default=False)
@@ -130,7 +130,7 @@ class Website(models.Model):
         return "%s %s: %s" % (self.contact.first_name, self.type, self.website)
 
 class SocialNetwork(models.Model):
-    contact = models.ForeignKey(Contact)
+    contact = models.ForeignKey(Contact, related_name='social_networks')
     handle = models.CharField(max_length = "50")
     type = models.CharField(max_length="20", choices = SOCNET_TYPES)
     public_visible = models.BooleanField(default=False)
