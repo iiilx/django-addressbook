@@ -1,5 +1,5 @@
 from django.conf import settings
-from django_localflavor_us.models import USStateField, PhoneNumberField
+from django_localflavor_us.models import USStateField
 from django.core.files.storage import get_storage_class
 from django.db import models
 from django.utils.functional import LazyObject
