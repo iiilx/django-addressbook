@@ -26,7 +26,7 @@ def add_group(request):
     return render(request, 'addressbook/add_group.html',
             RequestContext(request, {'form':form}))
 
- 
+
 @login_required
 def add_contact(request):
     if request.method == 'POST': # If the form has been submitted...
@@ -80,14 +80,14 @@ def edit_contact(request, pk):
             address_formset.is_valid() and phone_formset.is_valid()):
             contact_form.save()
             email_formset.save()
-            address_formset.save()     
-            phone_formset.save()     
+            address_formset.save()
+            phone_formset.save()
             return HttpResponseRedirect(reverse('addressbook_index'))
     else:
         contact_form = ContactForm(instance=contact, user=request.user)
-        phone_formset = PhoneEditFormSet(instance = contact, prefix="phone") 
-        address_formset = AddressEditFormSet(instance = contact, prefix="address") 
-        email_formset = EmailEditFormSet(instance = contact, prefix="email") 
+        phone_formset = PhoneEditFormSet(instance = contact, prefix="phone")
+        address_formset = AddressEditFormSet(instance = contact, prefix="address")
+        email_formset = EmailEditFormSet(instance = contact, prefix="email")
     return render(request, 'addressbook/edit_contact.html',
             RequestContext(request, {
                 'email_formset':email_formset, 'phone_formset':phone_formset,
@@ -133,7 +133,7 @@ def single_contact(request, pk):
                 }))
     elif request.method=="POST":
         contact.delete()
-        return HttpResponseRedirect(reverse('addressbook_index'))    
+        return HttpResponseRedirect(reverse('addressbook_index'))
     else:
         raise Http404
 
