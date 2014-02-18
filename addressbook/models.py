@@ -127,6 +127,7 @@ class Email(models.Model):
 class Website(models.Model):
     contact = models.ForeignKey(Contact, related_name='websites')
     website = models.URLField(blank=True)
+    name = models.CharField(max_length="50", blank=True)
     type = models.CharField(max_length="20", choices = WEBSITE_TYPES)
     public_visible = models.BooleanField(default=False)
     contact_visible = models.BooleanField(default=False)
