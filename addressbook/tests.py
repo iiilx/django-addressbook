@@ -163,7 +163,7 @@ class TestModelsTestCase(TestCase):
                                     'phone-0-type':'Work', 'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
                                     'address-MAX_NUM_FORMS':'3', 'address-0-street':'11 Steven Pl',
                                     'address-0-city':'Waldwick', 'address-0-state':'NJ', 'address-0-zip':'07463',
-                                    'address-0-type':'Work'})
+                                    'address-0-type':'Work', 'order': 1})
         self.assertRedirects(response, '/addressbook/')
         self.failUnlessEqual(response.status_code, 302)
         count = Contact.objects.all().count()
@@ -179,7 +179,7 @@ class TestModelsTestCase(TestCase):
                                     'phone-0-type':'Work', 'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
                                     'address-MAX_NUM_FORMS':'3', 'address-0-street':'15 Howard Pl',
                                     'address-0-city':'Waldwick', 'address-0-state':'NJ', 'address-0-zip':'07463',
-                                    'address-0-type':'Work'})
+                                    'address-0-type':'Work', 'order': 1})
         self.failUnlessEqual(response.status_code, 302)
         c = Contact.objects.get(last_name='Smith', first_name='Sven')
         self.failUnlessEqual(c.middle_name, 'Steven')
