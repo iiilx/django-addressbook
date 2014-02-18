@@ -155,15 +155,24 @@ class TestModelsTestCase(TestCase):
 
     def test_add_contact(self):
         """ POST data: ContactForm, EmailFormset w/ prefix, PhoneFormSet w/ prefix, AddressFormSet w/ prefix"""
-        response = self.logged_client.post('/addressbook/contact/add', {'group': self.group1.pk, 'last_name':'Manno',
-                                    'first_name':'David', 'email-TOTAL_FORMS':'1', 'email-INITIAL_FORMS':'0',
-                                    'email-MAX_NUM_FORMS':'0', 'email-0-email':'Sven@gmail.com',
-                                    'email-0-type':'Work', 'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
-                                    'phone-MAX_NUM_FORMS':'3', 'phone-0-phone':'201-123-1234',
-                                    'phone-0-type':'Work', 'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
-                                    'address-MAX_NUM_FORMS':'3', 'address-0-street':'11 Steven Pl',
-                                    'address-0-city':'Waldwick', 'address-0-state':'NJ', 'address-0-zip':'07463',
-                                    'address-0-type':'Work', 'order': 1})
+        response = self.logged_client.post('/addressbook/contact/add', {
+                'group': self.group1.pk,
+                'last_name':'Manno', 'first_name':'David', 'order': 1,
+                'email-TOTAL_FORMS':'1', 'email-INITIAL_FORMS':'0',
+                'email-MAX_NUM_FORMS':'0', 'email-0-email':'Sven@gmail.com',
+                'email-0-type':'Work',
+                'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
+                'phone-MAX_NUM_FORMS':'3', 'phone-0-phone':'201-123-1234',
+                'phone-0-type':'Work',
+                'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
+                'address-MAX_NUM_FORMS':'3', 'address-0-street':'11 Steven Pl',
+                'address-0-city':'Waldwick', 'address-0-state':'NJ',
+                'address-0-zip':'07463', 'address-0-type':'Work',
+                'website-TOTAL_FORMS':'1', 'website-INITIAL_FORMS':'0',
+                'website-MAX_NUM_FORMS':'3',
+                'website-0-website':'http://www.github.com',
+                'website-0-type':'Work', 'website-0-name':'GitHub'
+            })
         self.assertRedirects(response, '/addressbook/')
         self.failUnlessEqual(response.status_code, 302)
         count = Contact.objects.all().count()
@@ -171,15 +180,25 @@ class TestModelsTestCase(TestCase):
         #self.failUnlessEqual(c.first_name, 'David')
 
     def test_edit_contact(self):
-        response = self.logged_client.post('/addressbook/contact/%s/edit' % self.contact1.pk, {'group': self.group1.pk, 'last_name':'Smith',
-                                    'first_name':'Sven', 'middle_name':'Steven','email-TOTAL_FORMS':'1', 'email-INITIAL_FORMS':'0',
-                                    'email-MAX_NUM_FORMS':'0', 'email-0-email':'manno@gmail.com',
-                                    'email-0-type':'Work', 'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
-                                    'phone-MAX_NUM_FORMS':'3', 'phone-0-phone':'201-123-1234',
-                                    'phone-0-type':'Work', 'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
-                                    'address-MAX_NUM_FORMS':'3', 'address-0-street':'15 Howard Pl',
-                                    'address-0-city':'Waldwick', 'address-0-state':'NJ', 'address-0-zip':'07463',
-                                    'address-0-type':'Work', 'order': 1})
+        response = self.logged_client.post('/addressbook/contact/%s/edit' % self.contact1.pk, {
+                'group': self.group1.pk,
+                'last_name':'Smith', 'first_name':'Sven',
+                'middle_name':'Steven', 'order': 1,
+                'email-TOTAL_FORMS':'1', 'email-INITIAL_FORMS':'0',
+                'email-MAX_NUM_FORMS':'0', 'email-0-email':'manno@gmail.com',
+                'email-0-type':'Work',
+                'phone-TOTAL_FORMS':'1', 'phone-INITIAL_FORMS':'0',
+                'phone-MAX_NUM_FORMS':'3', 'phone-0-phone':'201-123-1234',
+                'phone-0-type':'Work',
+                'address-TOTAL_FORMS':'1', 'address-INITIAL_FORMS':'0',
+                'address-MAX_NUM_FORMS':'3', 'address-0-street':'15 Howard Pl',
+                'address-0-city':'Waldwick', 'address-0-state':'NJ',
+                'address-0-zip':'07463', 'address-0-type':'Work',
+                'website-TOTAL_FORMS':'1', 'website-INITIAL_FORMS':'0',
+                'website-MAX_NUM_FORMS':'3',
+                'website-0-website':'http://www.github.com',
+                'website-0-type':'Work', 'website-0-name':'GitHub'
+            })
         self.failUnlessEqual(response.status_code, 302)
         c = Contact.objects.get(last_name='Smith', first_name='Sven')
         self.failUnlessEqual(c.middle_name, 'Steven')

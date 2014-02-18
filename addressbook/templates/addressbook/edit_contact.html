@@ -9,7 +9,7 @@
     <script>
     $(document).ready(function() {
       // Code adapted from http://djangosnippets.org/snippets/1389/
-    prefixes=['email','phone','address'];
+    prefixes=['email','phone','address','website'];
     for (i in prefixes) {
         if ($('#id_'+prefixes[i]+'-INITIAL_FORMS').val() == "1") {
             var row = $("."+prefixes[i]+":first");
@@ -142,6 +142,14 @@
         {{ address_formset.management_form }}
         {% for form in address_formset.forms %}
         <div class="{{ address_formset.prefix }}{% if not forloop.last %} dot{% endif %}">
+          {{ form|crispy }}
+        </div>
+        {% endfor %}
+
+        <div class="dark">Web site(s) <a class="add sm" href="#">Add another Web site</a></div>
+        {{ website_formset.management_form }}
+        {% for form in website_formset.forms %}
+        <div class="{{website_formset.prefix}}{% if not forloop.last %} dot{% endif %}">
           {{ form|crispy }}
         </div>
         {% endfor %}
