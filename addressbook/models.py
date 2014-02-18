@@ -71,7 +71,7 @@ class Contact(models.Model):
     first_name = models.CharField(max_length = "40", blank=False)
     middle_name = models.CharField(max_length = "40", blank = True)
     title = models.CharField(max_length = "40", blank = True)
-    organization = models.CharField(max_length = "50", blank = True)
+    organization = models.CharField(max_length = "100", blank = True)
     url = models.URLField(blank=True)
     blurb = models.TextField(null=True, blank=True)
     profile_image = ThumbnailerImageField(upload_to="profile_images/", blank=True, null=True)
