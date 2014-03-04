@@ -33,7 +33,7 @@ Installing the app
    
 OR
 
-    easy_install django-addressbook
+    (for django <= 1.4: easy_install django-addressbook)
 
 Setting up the app
 ----------------------
