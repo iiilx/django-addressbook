@@ -1,6 +1,11 @@
 Django-addressbook
 --------------------
 
+Supported Versions
+-------------------
+* master branch is for Django 1.5+
+* other branch is for Django 1.4 or lower
+
 Features
 -----------
 
