@@ -15,7 +15,7 @@
 
 <div class="qr">
 {{ vcard_str|qrcode }}
-<a class="dlink" href="{% url "addressbook_download_vcard" %}?id={{ contact.id }}">Download V-card</a> 
+<a class="dlink" href="{% url "addressbook_download_vcard" pk=contact.id %}">Download V-card</a> 
 </div>
 
 <br clear="all" />

@@ -1,6 +1,12 @@
+*.pyc
 build
 django_addressbook.egg-info
 dist
 /.project
 /.pydevproject
 /.settings
+/.tox
+/.coverage
+/.python-version
+/coverage.xml
+/nosetests.xml

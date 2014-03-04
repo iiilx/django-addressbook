@@ -10,8 +10,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires = [
+        'south',
         'vobject',
-        'django-uni-form',
+        'django-crispy-forms',
         'easy-thumbnails',
         'django-localflavor-us',
     ],

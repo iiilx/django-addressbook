@@ -26,7 +26,7 @@ def add_group(request):
     return render(request, 'addressbook/add_group.html',
             RequestContext(request, {'form':form}))
 
- 
+
 @login_required
 def add_contact(request):
     if request.method == 'POST': # If the form has been submitted...
@@ -35,7 +35,10 @@ def add_contact(request):
         email_formset = EmailFormSet(request.POST, prefix="email")
         phone_formset = PhoneFormSet(request.POST, prefix="phone")
         address_formset = AddressFormSet(request.POST, prefix="address")
-        if contact_form.is_valid() and email_formset.is_valid() and phone_formset.is_valid() and address_formset.is_valid():
+        website_formset = WebsiteFormSet(request.POST, prefix="website")
+        if (contact_form.is_valid() and email_formset.is_valid() and
+                phone_formset.is_valid() and address_formset.is_valid() and
+                website_formset.is_valid()):
             contact = contact_form.save()
             for form in email_formset.forms:
                 email = form.save(commit=False)
@@ -49,6 +52,10 @@ def add_contact(request):
                 address = form.save(commit=False)
                 address.contact = contact
                 address.save()
+            for form in website_formset.forms:
+                website = form.save(commit=False)
+                website.contact = contact
+                website.save()
 #            request.user.message_set.create(message = 'Successfully saved contact.')
             return HttpResponseRedirect(reverse('addressbook_index')) # Redirect to a 'success' page
     else:
@@ -59,10 +66,14 @@ def add_contact(request):
         email_formset = EmailFormSet(prefix="email")
         phone_formset = PhoneFormSet(prefix="phone")
         address_formset = AddressFormSet(prefix="address")
+        website_formset = WebsiteFormSet(prefix="website")
     return render(request, 'addressbook/add_contact.html',
             RequestContext(request, {
-                'phone_formset':phone_formset, 'contact_form':contact_form,
-                'email_formset':email_formset, 'address_formset':address_formset
+                'phone_formset': phone_formset,
+                'contact_form': contact_form,
+                'email_formset': email_formset,
+                'address_formset': address_formset,
+                'website_formset': website_formset
             }))
 
 @login_required
@@ -76,23 +87,27 @@ def edit_contact(request, pk):
         phone_formset = PhoneEditFormSet(request.POST, instance = contact, prefix="phone")
         address_formset = AddressEditFormSet(request.POST, instance = contact, prefix="address")
         email_formset = EmailEditFormSet(request.POST, instance = contact, prefix="email")
+        website_formset = WebsiteEditFormSet(request.POST, instance = contact, prefix="website")
         if (contact_form.is_valid() and email_formset.is_valid() and
-            address_formset.is_valid() and email_formset.is_valid()):
+                address_formset.is_valid() and phone_formset.is_valid() and
+                website_formset.is_valid()):
             contact_form.save()
             email_formset.save()
-            address_formset.save()     
-            phone_formset.save()     
+            address_formset.save()
+            phone_formset.save()
+            website_formset.save()
             return HttpResponseRedirect(reverse('addressbook_index'))
     else:
         contact_form = ContactForm(instance=contact, user=request.user)
-        phone_formset = PhoneEditFormSet(instance = contact, prefix="phone") 
-        address_formset = AddressEditFormSet(instance = contact, prefix="address") 
-        email_formset = EmailEditFormSet(instance = contact, prefix="email") 
+        phone_formset = PhoneEditFormSet(instance = contact, prefix="phone")
+        address_formset = AddressEditFormSet(instance = contact, prefix="address")
+        email_formset = EmailEditFormSet(instance = contact, prefix="email")
+        website_formset = WebsiteEditFormSet(instance = contact, prefix="website")
     return render(request, 'addressbook/edit_contact.html',
             RequestContext(request, {
                 'email_formset':email_formset, 'phone_formset':phone_formset,
                 'address_formset':address_formset, 'contact_form':contact_form,
-                'contact':contact
+                'website_formset':website_formset, 'contact':contact
             }))
 
 @login_required
@@ -133,19 +148,18 @@ def single_contact(request, pk):
                 }))
     elif request.method=="POST":
         contact.delete()
-        return HttpResponseRedirect(reverse('addressbook_index'))    
+        return HttpResponseRedirect(reverse('addressbook_index'))
     else:
         raise Http404
 
 @login_required
-def download_vcard(request, vcard=VCard):
+def download_vcard(request, pk, vcard=VCard):
     """
     View function for returning single vcard
     """
-    pk = request.GET.get('id');
     contact = Contact.objects.get(pk=pk)
     output = vcard(contact).output_string()
     filename = "contact_%s%s.vcf" % (contact.first_name, contact.last_name)
-    response = HttpResponse(output, mimetype="text/x-vCard")
+    response = HttpResponse(output, content_type="text/x-vCard")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response

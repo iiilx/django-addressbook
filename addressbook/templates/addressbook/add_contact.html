@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load uni_form_tags %}
+{% load crispy_forms_tags %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}uni_form/uni-form.css" type="text/css" />
@@ -116,12 +116,12 @@ function updateElementIndex(el, prefix, ndx) {
 <form action="" method="post" class="uniForm">{% csrf_token %}
     <fieldset class="inlineLabels">
         <div class="dark">Add Contact Info</div>
-        {{ contact_form|as_uni_form }}
+        {{ contact_form|crispy }}
         <div class="dark">Email(s) <a class="add sm" href="#">Add another email</a></div>
         {{ email_formset.management_form }}
         {% for form in email_formset.forms %}
             <div class="{{email_formset.prefix}}">
-              {{ form|as_uni_form }}
+              {{ form|crispy }}
             </div>
         {% endfor %}
      
@@ -131,7 +131,7 @@ function updateElementIndex(el, prefix, ndx) {
         
         {% for form in phone_formset.forms %}
         <div class="{{phone_formset.prefix}}">
-          {{ form|as_uni_form }}
+          {{ form|crispy }}
         </div>
         {% endfor %}
      
@@ -141,10 +141,19 @@ function updateElementIndex(el, prefix, ndx) {
         
         {% for form in address_formset.forms %}
         <div class="{{address_formset.prefix}}">
-          {{ form|as_uni_form }}
+          {{ form|crispy }}
         </div>
         {% endfor %}
-         
+
+        <div class="dark">Web site(s) <a class="add sm" href="#">Add another Web site</a></div>
+        {{ website_formset.management_form }}
+
+        {% for form in website_formset.forms %}
+        <div class="{{website_formset.prefix}}">
+          {{ form|crispy }}
+        </div>
+        {% endfor %}
+
         <div class="buttonHolder">
         <button class=primaryAction" type="submit">Add Contact</button>
         </div>
